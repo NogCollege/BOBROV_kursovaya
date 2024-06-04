@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>сайт</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="rov">
+    <section class="main-begin">
+        <div class="btn-begin">
+            <img src="img/baki.png" alt="боец баки">
+            <button class="lesgo">Начать</a>
+        </div>
+        <div class="text-begin">
+            <span id="text2"><p id="text"></p></span>
+            <script src="js/typer.js"></script>
+        </div>
+    </section>
+
+
+    <div class="main">
+        <input type="checkbox" id="chk" aria-hidden="true">
+        <a href="#" class="close"><img src="img/Background (2).png" alt="" height="30" width="30"></a>
+          <div class="signup">
+            <form action="validation-form/check.php" method="post" class="form">
+              <label for="chk" aria-hidden="true">Регистрация</label>
+              <input type="text" placeholder="Имя" required="" name="name" id="name" >
+              <input type="text" name="login" placeholder="Логин" required="" id="login">
+              <input type="password" name="pass" id="pass" placeholder="Пароль" required="">
+              <button class="btn btn-success" type="submit">Зарегистрироваться</button>
+            </form>
+          </div>
+          <div class="login">
+            <form action="validation-form/auth.php" method="post" class="form">
+              <label for="chk" aria-hidden="true">Авторизация</label>
+              <input type="text" name="login" id="login" placeholder="Почта" required="">
+              <input type="password" name="pass" id="pass" placeholder="Пароль" required="">
+              <button class="btn btn-success" type="submit">Войти</button>
+              <?php $not_exitst = "Такой пользователь не найден" ?>
+            </form>
+          </div>
+      </div>
+      <script src="js/index.js"></script>
+</div>
+</body>
+</html>
