@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+</head>
+<body>
+    <header>
+        <div class="logo">BINN</div>
+        <nav>
+            <ul>
+                <li><a href="#profile">Профиль</a></li>
+                <li><a href="#friends">Друзья</a></li>
+                <li><a href="#messenger">Мессенджер</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% block body %}{% endblock %}
+    <footer>
+        <p>&copy; 2024 MySocialNetwork. Все права защищены.</p>
+    </footer>
+</body>
+</html>

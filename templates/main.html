@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Социальная Сеть</title>
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">MySocialNetwork</div>
+        <nav>
+            <ul>
+                <li><a href="#profile">Профиль</a></li>
+                <li><a href="/friend">Друзья</a></li>
+                <li><a href="#messenger">Мессенджер</a></li>
+                <li><a href="/logout">выйти</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="profile">
+            <img src="../static/img/Vector.png" alt="">
+            <h2>Велcum,{{ session['username'] }}!</h2>
+            <p>[your bio]</p>
+        </section>
+        <section id="post">
+            <h2>Новости</h2>
+            <p>Скоро будет добавлено...</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 MySocialNetwork. Все права защищены.</p>
+    </footer>
+</body>
+</html>
