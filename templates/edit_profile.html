@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Ваши друзья
+{% endblock %}
+
+{% block body %}
+    <section class="main-profile">
+    <h1>Редактировать биографию</h1>
+    <form method="POST" action="/edit">
+        <textarea name="bio" class="bio" placeholder="Биография" maxlength="52">{{ bio }}</textarea>
+        <button type="submit">Сохранить</button>
+    </form>
+</section>
+{% endblock %}

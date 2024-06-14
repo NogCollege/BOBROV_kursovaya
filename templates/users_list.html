@@ -1,0 +1,32 @@
+<!-- templates/users_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}
+Ваши друзья
+{% endblock %}
+
+{% block body %}
+<main class="main-friend">
+    <section id="friends" class="friend">
+        <h2 class="friend-h">Список друзей</h2>
+        <div class="friend-list">
+            {% for user in users %}
+            <div class="friend-card">
+                <div class="friend-info">
+                    <p class="friend-name">{{ user['username'] }}</p>
+                    <p class="friend-bio">{{ user['bio'] }}</p>
+                    <!-- Добавьте фото пользователя, если есть -->
+                    {% if user['photo'] %}
+                    <img src="{{ user['photo'] }}" alt="Фото {{ user['username'] }}" class="friend-photo">
+                    {% endif %}
+                    <div class="friend-actions">
+                        <button class="btn message">Написать</button>
+                        <button class="btn remove">Добавить в друзья</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock %}

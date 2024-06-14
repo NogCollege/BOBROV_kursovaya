@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Ваши друзья
+{% endblock %}
+
+{% block body %}
+    <h1>Профиль</h1>
+    <p>Имя пользователя: {{ user['username'] }}</p>
+    <p>Биография: {{ user['bio'] }}</p>
+    {% if user['photo'] %}
+        <img src="{{ url_for('static', filename=user['photo']) }}" alt="Profile Photo">
+    {% endif %}
+    <a href="{{ url_for('edit_profile') }}">Редактировать профиль</a>
+    {% endblock %}

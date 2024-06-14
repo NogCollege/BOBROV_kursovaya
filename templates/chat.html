@@ -1,0 +1,26 @@
+<!-- templates/chat.html -->
+{% extends 'base.html' %}
+
+{% block title %}
+Чат
+{% endblock %}
+
+{% block body %}
+<main class="main-chat">
+    <section id="chat" class="chat">
+        <h2>Чат</h2>
+        <div id="chat-messages">
+            {% for message in messages %}
+            <div class="message">
+                <p><strong><a href="{{ url_for('view_profile', username=message['username']) }}">{{ message['username'] }}</a></strong>: {{ message['message'] }}</p>
+                <span class="timestamp">{{ message['timestamp'] }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        <form id="message-form" method="POST" action="/chat" class="message-form">
+            <textarea name="message" placeholder="Введите ваше сообщение" required></textarea>
+            <button type="submit">Отправить</button>
+        </form>
+    </section>
+</main>
+{% endblock %}

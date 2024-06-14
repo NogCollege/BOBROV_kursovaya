@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
     <header>
-        <div class="logo">BINN</div>
+        <a href="/main">BINN</a>
         <nav>
             <ul>
-                <li><a href="#profile">Профиль</a></li>
-                <li><a href="#friends">Друзья</a></li>
-                <li><a href="#messenger">Мессенджер</a></li>
+                <li><a href="/profile">Профиль</a></li>
+                <li><a href="/friends">Друзья</a></li>
+                <li><a href="/chat">Мессенджер</a></li>
             </ul>
         </nav>
     </header>
