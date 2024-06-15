@@ -1,10 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.utils import secure_filename
+from filters import split_into_lines
 import os
 import sqlite3
 
 app = Flask(__name__)
 app.secret_key = 'stepan_olegovich'
+
+app.jinja_env.filters['split_into_lines'] = split_into_lines
+
 
 # Настройки для загрузки файлов
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
@@ -15,7 +19,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def create_table():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
-    cursor.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, password TEXT, bio TEXT, photo TEXT)')
+    cursor.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, password TEXT, bio TEXT, age INTEGER, city TEXT photo TEXT)')
     cursor.execute('CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, message TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)')
     conn.commit()
     conn.close()
@@ -69,7 +73,7 @@ def login():
             return redirect(url_for('chat'))
         else:
             return 'Неверный логин или пароль. Попробуйте еще раз.'
-    return render_template('login.html')
+    return render_template('index.html')
 
 @app.route('/main')
 def main():
@@ -249,7 +253,7 @@ def chat():
     
     if request.method == 'POST':
         username = session['username']
-        message = request.form['message']
+        message = request.form['message'][:300]  # Ограничиваем длину сообщения до 300 символов
         
         cursor.execute('INSERT INTO messages (username, message) VALUES (?, ?)', (username, message))
         conn.commit()
@@ -262,6 +266,7 @@ def chat():
     conn.close()
 
     return render_template('chat.html', messages=messages)
+
 
 
 @app.route('/send_message', methods=['POST'])

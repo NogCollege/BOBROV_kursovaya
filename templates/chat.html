@@ -1,4 +1,3 @@
-<!-- templates/chat.html -->
 {% extends 'base.html' %}
 
 {% block title %}
@@ -6,21 +5,34 @@
 {% endblock %}
 
 {% block body %}
-<main class="main-chat">
-    <section id="chat" class="chat">
-        <h2>Чат</h2>
-        <div id="chat-messages">
-            {% for message in messages %}
-            <div class="message">
-                <p><strong><a href="{{ url_for('view_profile', username=message['username']) }}">{{ message['username'] }}</a></strong>: {{ message['message'] }}</p>
-                <span class="timestamp">{{ message['timestamp'] }}</span>
+<div class="body-chat">
+<main class="chat-container">
+    <h2>Чат</h2>
+    <div class="messages" id="messages">
+        {% for message in messages %}
+            <div class="message {% if message['username'] == session['username'] %}own-message{% else %}other-message{% endif %}">
+                <div class="message-content">
+                    <strong>
+                        <a href="{{ url_for('view_profile', username=message['username']) }}">
+                            {{ message['username'] }}
+                        </a>
+                    </strong>
+                    <p>{{ message['message'] | split_into_lines(50) }}</p>
+                    <small>{{ message['timestamp'] }}</small>
+                </div>
             </div>
-            {% endfor %}
-        </div>
-        <form id="message-form" method="POST" action="/chat" class="message-form">
-            <textarea name="message" placeholder="Введите ваше сообщение" required></textarea>
-            <button type="submit">Отправить</button>
-        </form>
-    </section>
+        {% endfor %}
+    </div>
+    <form method="post" action="{{ url_for('chat') }}" class="chat-form">
+        <textarea name="message" placeholder="Введите ваше сообщение" maxlength="300" required></textarea>
+        <button type="submit">Отправить</button>
+    </form>
 </main>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var messagesDiv = document.getElementById("messages");
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    });
+</script>
 {% endblock %}

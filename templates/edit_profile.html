@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Ваши друзья
+Редактировать профиль
 {% endblock %}
 
 {% block body %}
-    <section class="main-profile">
-    <h1>Редактировать биографию</h1>
-    <form method="POST" action="/edit">
-        <textarea name="bio" class="bio" placeholder="Биография" maxlength="52">{{ bio }}</textarea>
-        <button type="submit">Сохранить</button>
-    </form>
+<section class="rovn-container-edit">
+<main class="edit-profile-container">
+    <div class="edit-profile-card">
+        <h1>Редактировать профиль</h1>
+        <form method="POST" action="/edit">
+            <textarea name="bio" class="bio-textarea" placeholder="Биография" maxlength="52">{{ bio }}</textarea>
+            <input type="number" name="age" class="input-field" placeholder="Возраст" value="{{ age }}">
+            <input type="text" name="city" class="input-field" placeholder="Город проживания" value="{{ city }}">
+            <button type="submit" class="btn save-btn">Сохранить</button>
+        </form>
+    </div>
+</main>
 </section>
 {% endblock %}
