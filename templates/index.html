@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="../static/img/Vector.png" type="image/x-icon">
 </head>
 <body>
     <div class="rov">
@@ -28,8 +29,8 @@
           <div class="signup">
               <form method="POST" action="/signup">
                   <label for="chk" aria-hidden="true">Регистрация</label>
-                  <input type="text" name="username" placeholder="Логин" required="" id="login" minlength="4">
-                  <input type="password" name="password" id="pass" placeholder="Пароль" required="" minlength="5">
+                  <input type="text" name="username" placeholder="Логин" required="" id="login" minlength="4" maxlength="20">
+                  <input type="password" name="password" id="pass" placeholder="Пароль" required="" minlength="5" maxlength="25">
                   <button class="btn btn-success" type="submit">Зарегистрироваться</button>
               </form>
           </div>

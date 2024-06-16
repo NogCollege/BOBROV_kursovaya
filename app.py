@@ -88,7 +88,7 @@ def login():
                 conn.close()
                 
             print(f'Logged in as {username} with admin rights: {session["is_admin"]}')
-            return redirect(url_for('my_profile'))  # Перенаправляем на my_profile вместо main
+            return redirect(url_for('main'))
         else:
             return 'Неверный логин или пароль. Попробуйте еще раз.'
     
