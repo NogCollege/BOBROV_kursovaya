@@ -12,12 +12,15 @@
             {% for user in users %}
             <div class="friend-card">
                 <div class="friend-info">
-                    <a href="{{ url_for('view_profile', username=user['username']) }}" class="friend-name">{{ user['username'] }}</a>
-                    <p class="friend-bio">{{ user['bio'] }}</p>
-                    <!-- Добавьте фото пользователя, если есть -->
+                    <div class="friend-rovn">
                     {% if user['photo'] %}
-                    <img src="{{ url_for('static', filename=user['photo']) }}" alt="Фото {{ user['username'] }}" class="friend-photo">
-                    {% endif %}
+                    <img src="{{ url_for('static', filename=user['photo']) }}" alt="Profile Photo" class="friend-photo">
+                {% else %}
+                    <img src="{{ url_for('static', filename='default_profile.png') }}" alt="Default Profile Photo" class="friend-photo">
+                {% endif %}
+                    <a href="{{ url_for('view_profile', username=user['username']) }}" class="friend-name">{{ user['username'] }}</a>
+                </div>
+                    <p class="friend-bio">{{ user['bio'] }}</p>
                     <div class="friend-actions">
                         <a href="{{ url_for('private_chat', username=user['username']) }}" class="btn message">Написать</a>
                         <button class="btn remove">Добавить в друзья</button>

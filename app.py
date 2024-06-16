@@ -19,10 +19,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def create_table():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
-    cursor.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, password TEXT, bio TEXT, age INTEGER, city TEXT photo TEXT)')
+    cursor.execute('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, password TEXT, bio TEXT, age INTEGER, city TEXT, photo TEXT)')
     cursor.execute('CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, message TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)')
     conn.commit()
     conn.close()
+
+
 
 def get_db_connection():
     conn = sqlite3.connect('database.db')
@@ -89,22 +91,43 @@ def main():
     return render_template('main.html', user=user)
 
 # Редактирование профиля
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 @app.route('/edit', methods=['GET', 'POST'])
 def edit_profile():
     if 'username' not in session:
         return redirect(url_for('login'))
-    
+
     if request.method == 'POST':
         new_bio = request.form['bio']
+        new_age = request.form['age']
+        new_city = request.form['city']
         username = session['username']
 
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # Обновляем биографию пользователя
-        cursor.execute('UPDATE users SET bio = ? WHERE username = ?', (new_bio, username))
-        conn.commit()
+        # Обработка загруженного файла
+        if 'photo' in request.files:
+            file = request.files['photo']
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(filepath)
+                # Обновляем путь к фото, чтобы использовались прямые косые черты
+                photo_path = os.path.join('uploads', filename).replace('\\', '/')  # <-- изменение
+                cursor.execute('UPDATE users SET photo = ? WHERE username = ?', (photo_path, username))
 
+
+        # Обновляем информацию профиля пользователя
+        cursor.execute('UPDATE users SET bio = ?, age = ?, city = ? WHERE username = ?', (new_bio, new_age, new_city, username))
+        conn.commit()
         conn.close()
 
         return redirect(url_for('profile'))
@@ -112,11 +135,13 @@ def edit_profile():
     # Если метод GET, отображаем форму для редактирования
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('SELECT bio FROM users WHERE username = ?', (session['username'],))
+    cursor.execute('SELECT bio, age, city FROM users WHERE username = ?', (session['username'],))
     user = cursor.fetchone()
     conn.close()
 
-    return render_template('edit_profile.html', bio=user['bio'])
+    return render_template('edit_profile.html', bio=user['bio'], age=user['age'], city=user['city'])
+
+
 # Профиль пользователя (собственный)
 @app.route('/profile')
 def profile():

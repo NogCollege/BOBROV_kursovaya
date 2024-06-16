@@ -457,7 +457,18 @@ nav ul li a:hover {
   flex-direction: column;
   gap: 10px;
 }
-.main-friend .friend .friend-list .friend-card .friend-info .friend-name {
+.main-friend .friend .friend-list .friend-card .friend-info .friend-rovn {
+  display: flex;
+  align-items: center;
+}
+.main-friend .friend .friend-list .friend-card .friend-info .friend-rovn .friend-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid #4b0082;
+  margin-right: 10px;
+}
+.main-friend .friend .friend-list .friend-card .friend-info .friend-rovn .friend-name {
   font-size: 1.2em;
   font-weight: bold;
 }
@@ -490,6 +501,7 @@ nav ul li a:hover {
 .main-friend .friend .friend-list .friend-card .friend-info .friend-actions .btn.remove {
   background-color: #f39c12;
   color: white;
+  text-decoration: none;
 }
 .main-friend .friend .friend-list .friend-card .friend-info .friend-actions .btn.remove:hover {
   background-color: #e67e22;
@@ -614,6 +626,14 @@ header nav ul li a:hover {
 }
 .main-profile .block-profile .profile-card .btn.friends:hover {
   background-color: #701ac0;
+}
+
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #4b0082;
+  margin-bottom: 20px;
 }
 
 .h-chat {
