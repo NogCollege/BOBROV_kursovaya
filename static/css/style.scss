@@ -349,6 +349,11 @@ body {
       display: flex;
       justify-content: space-around;
       align-items: center;
+      font-family: "Jura", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 300;
+      font-style: normal;
+      text-decoration: none;
         img {
             height: 100px;
             width: 100px;
@@ -503,6 +508,9 @@ $border-radius: 12px;
                         .friend-name {
                             font-size: 1.2em;
                             font-weight: bold;
+                            color: white;
+                            text-decoration: none;
+                            
                         }
                     }
 
@@ -510,18 +518,25 @@ $border-radius: 12px;
                     .friend-actions {
                         display: flex;
                         gap: 10px;
-
                         .btn {
-                            padding: 10px 15px;
+                            font-size: 13px;
                             border: none;
                             border-radius: 8px;
+                            text-decoration: none;
+                            text-align: center;
                             cursor: pointer;
                             font-weight: bold;
                             transition: background 0.3s;
-
+                            height: 50px;
+                            font-family: "Jura", sans-serif;
+                            font-optical-sizing: auto;
+                            font-weight: 300;
+                            font-style: normal;
+                            text-decoration: none;
                             &.block {
                                 background-color: #e74c3c;
                                 color: white;
+                                text-align: center;
 
                                 &:hover {
                                     background-color: #c0392b;
@@ -531,7 +546,13 @@ $border-radius: 12px;
                             &.message {
                                 background-color: $secondary-color;
                                 color: white;
-
+                                text-align: center;
+                                display: flex;
+                                padding: 0;
+                                margin: 0;
+                                justify-content: center;
+                                align-items: center;
+                                width: 130px;
                                 &:hover {
                                     background-color: darken($secondary-color, 10%);
                                 }
@@ -541,7 +562,7 @@ $border-radius: 12px;
                                 background-color: #f39c12;
                                 color: white;
                                 text-decoration: none;
-
+                                width: 130px;
                                 &:hover {
                                     background-color: #e67e22;
                                 }
@@ -563,30 +584,35 @@ footer {
     position: fixed;
     bottom: 0;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    font-family: "Jura", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    text-decoration: none;
 }
 
 
-$primary-color: #4b0082; // Темно-фиолетовый
-$secondary-color: #8a2be2; // Светло-фиолетовый
-$background-color: #1e1e2f; // Темный фон
-$card-background-color: #2b2b3d; // Фон для карточек
-$text-color: #ffffff; // Белый текст
-$muted-text-color: #b0b0b0; // Серый текст для менее важной информации
-$border-color: #3a3a4f; // Темный бордюр
-$header-height: 60px;
-$border-radius: 12px; // Закругленные углы
+// $primary-color: #4b0082; // Темно-фиолетовый
+// $secondary-color: #8a2be2; // Светло-фиолетовый
+// $background-color: #1e1e2f; // Темный фон
+// $card-background-color: #2b2b3d; // Фон для карточек
+// $text-color: #ffffff; // Белый текст
+// $muted-text-color: #b0b0b0; // Серый текст для менее важной информации
+// $border-color: #3a3a4f; // Темный бордюр
+// $header-height: 60px;
+// $border-radius: 12px; // Закругленные углы
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+// * {
+//     margin: 0;
+//     padding: 0;
+//     box-sizing: border-box;
+// }
 
-body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: $background-color;
-    color: $text-color;
-}
+// body {
+//     font-family: 'Helvetica Neue', Arial, sans-serif;
+//     background-color: $background-color;
+//     color: $text-color;
+// }
 
 header {
     background-color: $primary-color;
@@ -731,6 +757,11 @@ header {
     justify-content: center;
     align-items: center;
     margin-bottom: 100px;
+    font-family: "Jura", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    text-decoration: none;
 }
 
 // .chat-container {
@@ -809,6 +840,7 @@ header {
     display: flex;
     align-items: center;
     margin-top: 10px; /* Отступ сверху для формы */
+
 }
 
 .chat-form textarea {
@@ -828,10 +860,26 @@ header {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    height: 52px;
+    width: 110px;
+    font-size: 13px;
+    font-family: "Jura", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    text-decoration: none;
 }
 
 .chat-form button:hover {
     background-color: #6a1bbf;
+    height: 52px;
+    width: 110px;
+    font-size: 13px;
+    font-family: "Jura", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    text-decoration: none;
 }
 
 .rovn-container {
@@ -976,6 +1024,7 @@ header {
     border-radius: 5px;
     margin-bottom: 20px;
     resize: none;
+    color: white;
 }
 
 .input-field {
@@ -1070,4 +1119,59 @@ header {
 .message.received {
     background-color: #820dd6;
     align-self: flex-start;
+}
+
+.admin-table {
+    margin: 0 auto;
+    background-color: #2b2b3d;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #2b2b3d;
+    }
+    
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    th {
+        background-color: rgb(66, 66, 66);
+        color: white;
+    }
+    
+    td {
+        vertical-align: middle;
+    }
+    
+    .form-inline {
+        display: inline;
+        margin-right: 5px;
+    }
+    
+    .button {
+        padding: 8px 12px;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: #2f004d;
+    
+        &.delete {
+            background-color: rgb(255, 0, 0);
+    
+            &:hover {
+                background-color: darken(rgb(126, 0, 0), 10%);
+            }
+        }
+    
+        &:hover {
+            background-color: darken(rgb(70, 0, 70), 10%);
+        }
+    }
 }

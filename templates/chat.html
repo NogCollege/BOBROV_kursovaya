@@ -23,7 +23,7 @@
             </div>
         {% endfor %}
     </div>
-    <form method="post" action="{{ url_for('chat') }}" class="chat-form">
+    <form id="chat-form" method="post" action="{{ url_for('chat') }}" class="chat-form">
         <textarea name="message" placeholder="Введите ваше сообщение" maxlength="300" required></textarea>
         <button type="submit">Отправить</button>
     </form>
@@ -34,5 +34,16 @@
         var messagesDiv = document.getElementById("messages");
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     });
+    document.addEventListener('DOMContentLoaded', function() {
+    var chatForm = document.getElementById('chat-form'); // Получаем форму чата по ID
+    var messageInput = document.getElementById('message'); // Получаем поле ввода сообщения по ID
+
+    messageInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && !event.shiftKey) { // Проверяем, что нажата клавиша Enter и не нажат Shift
+            event.preventDefault(); // Предотвращаем стандартное действие Enter (обычно перенос строки)
+            chatForm.querySelector('[type="submit"]').click(); // Имитируем клик по кнопке отправки формы
+        }
+    });
+});
 </script>
 {% endblock %}

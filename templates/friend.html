@@ -1,36 +1,15 @@
+<!-- templates/friends.html -->
 {% extends 'base.html' %}
 
 {% block title %}
-Ваши друзья
+Друзья
 {% endblock %}
 
 {% block body %}
-<main class="main-friend">
-    <section id="friends" class="friend">
-        <h2>Список друзей</h2>
-        <div class="friend-list">
-            <div class="friend-card">
-                <div class="friend-info">
-                    <p class="friend-name">Иван Иванов</p>
-                    <div class="friend-actions">
-                        <button class="btn block">Заблокировать</button>
-                        <button class="btn message">Написать</button>
-                        <button class="btn remove">Удалить из друзей</button>
-                    </div>
-                </div>
-            </div>
-            <div class="friend-card">
-                <div class="friend-info">
-                    <p class="friend-name">Мария Петрова</p>
-                    <div class="friend-actions">
-                        <button class="btn block">Заблокировать</button>
-                        <button class="btn message">Написать</button>
-                        <button class="btn remove">Удалить из друзей</button>
-                    </div>
-                </div>
-            </div>
-            <!-- Add more friend cards as needed -->
-        </div>
-    </section>
-</div>
+    <h1>Друзья</h1>
+    <ul>
+        {% for friend in friends %}
+            <li>{{ friend.username }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
