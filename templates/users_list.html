@@ -1,4 +1,3 @@
-<!-- templates/users_list.html -->
 {% extends 'base.html' %}
 
 {% block title %}
@@ -13,14 +12,14 @@
             {% for user in users %}
             <div class="friend-card">
                 <div class="friend-info">
-                    <p class="friend-name">{{ user['username'] }}</p>
+                    <a href="{{ url_for('view_profile', username=user['username']) }}" class="friend-name">{{ user['username'] }}</a>
                     <p class="friend-bio">{{ user['bio'] }}</p>
                     <!-- Добавьте фото пользователя, если есть -->
                     {% if user['photo'] %}
-                    <img src="{{ user['photo'] }}" alt="Фото {{ user['username'] }}" class="friend-photo">
+                    <img src="{{ url_for('static', filename=user['photo']) }}" alt="Фото {{ user['username'] }}" class="friend-photo">
                     {% endif %}
                     <div class="friend-actions">
-                        <button class="btn message">Написать</button>
+                        <a href="{{ url_for('private_chat', username=user['username']) }}" class="btn message">Написать</a>
                         <button class="btn remove">Добавить в друзья</button>
                     </div>
                 </div>

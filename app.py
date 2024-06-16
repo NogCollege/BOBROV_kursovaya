@@ -298,6 +298,62 @@ def users():
 
     return render_template('users_list.html', users=users)
 
+def create_private_messages_table():
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('''CREATE TABLE IF NOT EXISTS private_messages (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        sender_username TEXT,
+                        receiver_username TEXT,
+                        message TEXT,
+                        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+                    )''')
+    conn.commit()
+    conn.close()
+
+
+
+@app.route('/chat/<username>', methods=['GET', 'POST'])
+def private_chat(username):
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    
+    current_user = session['username']
+
+    if request.method == 'POST':
+        message = request.form['message']
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO private_messages (sender_username, receiver_username, message) VALUES (?, ?, ?)',
+                       (current_user, username, message))
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for('private_chat', username=username))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('''SELECT * FROM private_messages 
+                      WHERE (sender_username = ? AND receiver_username = ?) 
+                         OR (sender_username = ? AND receiver_username = ?)
+                      ORDER BY timestamp ASC''', (current_user, username, username, current_user))
+    messages = cursor.fetchall()
+    conn.close()
+
+    return render_template('private_chat.html', messages=messages, receiver=username)
+
+
+
+
+
+
+
+
+
+
+
+
 # Выход из аккаунта
 @app.route('/logout')
 def logout():
@@ -307,4 +363,5 @@ def logout():
 
 if __name__ == '__main__':
     create_table()
+    create_private_messages_table()
     app.run(debug=True)

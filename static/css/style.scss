@@ -36,7 +36,6 @@ body {
                 align-items: center;
                 width: 350px;
                 height: 70px;
-                font-size: 35px;
                 font-family: "Jura", sans-serif;
                 font-optical-sizing: auto;
                 font-weight: 300;
@@ -380,6 +379,18 @@ body {
               line-height: 1.6;
               color: $muted-text-color;
           }
+          a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #8a2be2;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+          }
       }
 
   footer {
@@ -574,6 +585,15 @@ header {
     padding: 0 20px;
     height: $header-height;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    a {
+        color: white;
+        text-decoration: none;
+        font-size: 30px;
+        font-family: "Jura", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 300;
+        font-style: normal;
+    }
 
     .logo {
         font-size: 1.8em;
@@ -691,22 +711,22 @@ header {
     margin-bottom: 100px;
 }
 
-.chat-container {
-    width: 60%; /* Уменьшили размер контейнера */
-    max-width: 800px; /* Максимальная ширина */
-    height: 80%; /* Контейнер чата занимает 70% высоты body */
-    background: #2b2b3d;
-    padding: 30px;
-    margin-bottom: 30px;
-    border: 1px solid #3a3a4f;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    box-sizing: border-box;
-}
+// .chat-container {
+//     width: 60%; /* Уменьшили размер контейнера */
+//     max-width: 800px; /* Максимальная ширина */
+//     height: 80%; /* Контейнер чата занимает 70% высоты body */
+//     background: #2b2b3d;
+//     padding: 30px;
+//     margin-bottom: 30px;
+//     border: 1px solid #3a3a4f;
+//     border-radius: 12px;
+//     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+//     display: flex;
+//     flex-direction: column;
+//     padding: 20px;
+//     box-sizing: border-box;
+// }
 
 .messages {
     flex: 1; /* Сообщения занимают оставшееся пространство */
@@ -738,7 +758,7 @@ header {
 
 .other-message .message-content {
     background-color: #820dd6;
-    color: #dcdcdc;
+    color: #f5f5f5;
     text-align: left;
     border-radius: 10px 10px 10px 0;
 }
@@ -752,7 +772,7 @@ header {
 
 
 .message-content strong a {
-    color: blueviolet;
+    color: rgb(255, 255, 255);
     text-decoration: none;
 }
 
@@ -954,4 +974,78 @@ header {
 
 .btn.save-btn:hover {
     background-color: #6a1bbf;
+}
+
+.chat-container {
+    width: 60%; /* Уменьшили размер контейнера */
+    max-width: 800px; /* Максимальная ширина */
+    height: 80%; /* Контейнер чата занимает 70% высоты body */
+    background: #2b2b3d;
+    padding: 30px;
+    margin-bottom: 30px;
+    border: 1px solid #3a3a4f;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    form {
+        display: flex;
+        justify-content: space-between;
+    }
+    textarea {
+        flex: 1;
+        resize: none;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+    
+    button {
+        padding: 10px 20px;
+        margin-left: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #8a2be2;
+        color: white;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #6a1bbf;
+    }
+}
+
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column-reverse;
+}
+.messages-private {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.message.sent {
+    background-color: #8a2be2;
+    color: white;
+    align-self: flex-end;
+}
+
+.message.received {
+    background-color: #820dd6;
+    align-self: flex-start;
 }
