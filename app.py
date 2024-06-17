@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from werkzeug.utils import secure_filename
 from filters import split_into_lines
 import os
+from datetime import datetime
 import sqlite3
 
 app = Flask(__name__)
@@ -30,6 +31,31 @@ def get_db_connection():
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
+
+
+def get_all_messages():
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT username, content, timestamp FROM messages ORDER BY timestamp ASC")
+    rows = cursor.fetchall()
+    conn.close()
+    
+    messages = []
+    for row in rows:
+        messages.append({
+            'username': row[0],
+            'message': row[1],
+            'timestamp': datetime.strptime(row[2], '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')
+        })
+    
+    return messages
+
+@app.route('/fetch_messages')
+def fetch_messages():
+    messages = get_all_messages()  # Ваша функция для получения всех сообщений
+    return render_template('messages.html', messages=messages)
+
+
 
 # Главная страница
 @app.route('/')
@@ -229,22 +255,36 @@ def chat():
 
 
 
-
-@app.route('/send_message', methods=['POST'])
-def send_message():
+@app.route('/get_messages')
+def get_messages():
     if 'username' not in session:
-        return redirect(url_for('login'))
-
-    username = session['username']
-    message = request.form['message']
+        return jsonify({'error': 'Not logged in'}), 401
 
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO messages (username, message) VALUES (?, ?)', (username, message))
+    cursor.execute('SELECT * FROM messages ORDER BY timestamp DESC')
+    messages = cursor.fetchall()
+    conn.close()
+
+    messages_list = [{'username': row['username'], 'message': row['message'], 'timestamp': row['timestamp']} for row in messages]
+    return jsonify(messages_list)
+
+
+@app.route('/send_message', methods=['POST'])
+def send_message():
+    message_content = request.form['message']
+    username = session['username']  # Предполагается, что имя пользователя хранится в сессии
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO messages (username, content, timestamp) VALUES (?, ?, ?)", (username, message_content, timestamp))
     conn.commit()
     conn.close()
 
-    return redirect(url_for('chat'))
+    return jsonify({'status': 'success'})
+
+
 
 @app.route('/users')
 def users():
@@ -582,4 +622,4 @@ def logout():
 if __name__ == '__main__':
     create_table()
     create_private_messages_table()
-    app.run(debug=True)
+    app.run(debug=False, host='0.0.0.0')

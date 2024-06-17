@@ -5,45 +5,72 @@
 {% endblock %}
 
 {% block body %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="body-chat">
-<main class="chat-container">
-    <h2>Чат</h2>
-    <div class="messages" id="messages">
-        {% for message in messages %}
-            <div class="message {% if message['username'] == session['username'] %}own-message{% else %}other-message{% endif %}">
-                <div class="message-content">
-                    <strong>
-                        <a href="{{ url_for('view_profile', username=message['username']) }}">
-                            {{ message['username'] }}
-                        </a>
-                    </strong>
-                    <p>{{ message['message'] | split_into_lines(50) }}</p>
-                    <small>{{ message['timestamp'] }}</small>
+    <main class="chat-container">
+        <h2>Чат</h2>
+        <div class="messages" id="messages">
+            {% for message in messages %}
+                <div class="message {% if message['username'] == session['username'] %}own-message{% else %}other-message{% endif %}">
+                    <div class="message-content">
+                        <strong>
+                            <a href="{{ url_for('view_profile', username=message['username']) }}">
+                                {{ message['username'] }}
+                            </a>
+                        </strong>
+                        <p>{{ message['message'] | split_into_lines(50) }}</p>
+                        <small>{{ message['timestamp'] }}</small>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
-    <form id="chat-form" method="post" action="{{ url_for('chat') }}" class="chat-form">
-        <textarea name="message" placeholder="Введите ваше сообщение" maxlength="300" required></textarea>
-        <button type="submit">Отправить</button>
-    </form>
-</main>
+            {% endfor %}
+        </div>
+        <form id="message-form">
+            <input type="text" name="message" placeholder="Введите ваше сообщение" maxlength="300" required>
+            <button type="submit">Отправить</button>
+        </form>
+    </main>
 </div>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    function fetchMessages() {
+        $.ajax({
+            url: "{{ url_for('fetch_messages') }}",
+            type: "GET",
+            success: function(data) {
+                $('#messages').html(data);
+                var messagesDiv = document.getElementById("messages");
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }
+        });
+    }
+
+    $(document).ready(function() {
         var messagesDiv = document.getElementById("messages");
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    });
-    document.addEventListener('DOMContentLoaded', function() {
-    var chatForm = document.getElementById('chat-form'); // Получаем форму чата по ID
-    var messageInput = document.getElementById('message'); // Получаем поле ввода сообщения по ID
 
-    messageInput.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter' && !event.shiftKey) { // Проверяем, что нажата клавиша Enter и не нажат Shift
-            event.preventDefault(); // Предотвращаем стандартное действие Enter (обычно перенос строки)
-            chatForm.querySelector('[type="submit"]').click(); // Имитируем клик по кнопке отправки формы
-        }
+        setInterval(fetchMessages, 5000);  // Автоматически обновлять сообщения каждые 5 секунд
+
+        $('#message-form').submit(function (e) {
+            e.preventDefault(); // Предотвращаем стандартное поведение формы
+            let message = $('input[name="message"]').val();
+            $.ajax({
+                url: "{{ url_for('send_message') }}",
+                type: "POST",
+                data: {
+                    message: message
+                },
+                success: function () {
+                    $('input[name="message"]').val(''); // Очищаем поле ввода после отправки
+                    fetchMessages(); // Обновляем сообщения сразу после отправки
+                }
+            });
+        });
+
+        $('input[name="message"]').on('keydown', function(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                $('#message-form').submit();
+            }
+        });
     });
-});
 </script>
 {% endblock %}
